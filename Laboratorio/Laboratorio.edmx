@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="laboratorioModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="alumno">
+          <Key>
+            <PropertyRef Name="NumeroControl" />
+          </Key>
+          <Property Name="NumeroControl" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="CarreraId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="carrera">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="80" Nullable="false" />
+          <Property Name="NombreCorto" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="docente">
+          <Key>
+            <PropertyRef Name="NumeroEmpleado" />
+          </Key>
+          <Property Name="NumeroEmpleado" Type="int" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estadomaterial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estadoprestamo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="CategoriaId" Type="int" Nullable="false" />
+          <Property Name="Imagen" Type="blob" />
+        </EntityType>
+        <EntityType Name="prestamo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="AlumnoId" Type="varchar" MaxLength="8" />
+          <Property Name="DocenteId" Type="int" />
+          <Property Name="EstadoPrestamoId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="prestamomaterial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaEntrega" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="EstadoMaterialPrestamoId" Type="int" Nullable="false" />
+          <Property Name="EstadoMaterialEntregaId" Type="int" Nullable="false" />
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="Observaciones" Type="text" />
+          <Property Name="PrestamoId" Type="int" />
+        </EntityType>
+        <Association Name="Alumno_Carrera">
+          <End Role="carrera" Type="Self.carrera" Multiplicity="1" />
+          <End Role="alumno" Type="Self.alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="carrera">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="alumno">
+              <PropertyRef Name="CarreraId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Material_Categoria">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="material" Type="Self.material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="material">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo1">
+          <End Role="prestamo" Type="Self.prestamo" Multiplicity="0..1" />
+          <End Role="prestamomaterial" Type="Self.prestamomaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prestamo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamomaterial">
+              <PropertyRef Name="PrestamoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_Alumno">
+          <End Role="alumno" Type="Self.alumno" Multiplicity="0..1" />
+          <End Role="prestamo" Type="Self.prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumno">
+              <PropertyRef Name="NumeroControl" />
+            </Principal>
+            <Dependent Role="prestamo">
+              <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_Docente">
+          <End Role="docente" Type="Self.docente" Multiplicity="0..1" />
+          <End Role="prestamo" Type="Self.prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="docente">
+              <PropertyRef Name="NumeroEmpleado" />
+            </Principal>
+            <Dependent Role="prestamo">
+              <PropertyRef Name="DocenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_EstadoEntrega">
+          <End Role="estadomaterial" Type="Self.estadomaterial" Multiplicity="1" />
+          <End Role="prestamomaterial" Type="Self.prestamomaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadomaterial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamomaterial">
+              <PropertyRef Name="EstadoMaterialEntregaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_EstadoPrestamo">
+          <End Role="estadoprestamo" Type="Self.estadoprestamo" Multiplicity="1" />
+          <End Role="prestamo" Type="Self.prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadoprestamo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamo">
+              <PropertyRef Name="EstadoPrestamoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_EstadoPrestamoId">
+          <End Role="estadomaterial" Type="Self.estadomaterial" Multiplicity="1" />
+          <End Role="prestamomaterial" Type="Self.prestamomaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadomaterial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamomaterial">
+              <PropertyRef Name="EstadoMaterialPrestamoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_Material">
+          <End Role="material" Type="Self.material" Multiplicity="1" />
+          <End Role="prestamomaterial" Type="Self.prestamomaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamomaterial">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="laboratorioModelStoreContainer">
+          <EntitySet Name="alumno" EntityType="Self.alumno" Schema="laboratorio" store:Type="Tables" />
+          <EntitySet Name="carrera" EntityType="Self.carrera" Schema="laboratorio" store:Type="Tables" />
+          <EntitySet Name="categoria" EntityType="Self.categoria" Schema="laboratorio" store:Type="Tables" />
+          <EntitySet Name="docente" EntityType="Self.docente" Schema="laboratorio" store:Type="Tables" />
+          <EntitySet Name="estadomaterial" EntityType="Self.estadomaterial" Schema="laboratorio" store:Type="Tables" />
+          <EntitySet Name="estadoprestamo" EntityType="Self.estadoprestamo" Schema="laboratorio" store:Type="Tables" />
+          <EntitySet Name="material" EntityType="Self.material" Schema="laboratorio" store:Type="Tables" />
+          <EntitySet Name="prestamo" EntityType="Self.prestamo" Schema="laboratorio" store:Type="Tables" />
+          <EntitySet Name="prestamomaterial" EntityType="Self.prestamomaterial" Schema="laboratorio" store:Type="Tables" />
+          <AssociationSet Name="Alumno_Carrera" Association="Self.Alumno_Carrera">
+            <End Role="carrera" EntitySet="carrera" />
+            <End Role="alumno" EntitySet="alumno" />
+          </AssociationSet>
+          <AssociationSet Name="Material_Categoria" Association="Self.Material_Categoria">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="material" EntitySet="material" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo1" Association="Self.Prestamo1">
+            <End Role="prestamo" EntitySet="prestamo" />
+            <End Role="prestamomaterial" EntitySet="prestamomaterial" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_Alumno" Association="Self.Prestamo_Alumno">
+            <End Role="alumno" EntitySet="alumno" />
+            <End Role="prestamo" EntitySet="prestamo" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_Docente" Association="Self.Prestamo_Docente">
+            <End Role="docente" EntitySet="docente" />
+            <End Role="prestamo" EntitySet="prestamo" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_EstadoEntrega" Association="Self.Prestamo_EstadoEntrega">
+            <End Role="estadomaterial" EntitySet="estadomaterial" />
+            <End Role="prestamomaterial" EntitySet="prestamomaterial" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_EstadoPrestamo" Association="Self.Prestamo_EstadoPrestamo">
+            <End Role="estadoprestamo" EntitySet="estadoprestamo" />
+            <End Role="prestamo" EntitySet="prestamo" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_EstadoPrestamoId" Association="Self.Prestamo_EstadoPrestamoId">
+            <End Role="estadomaterial" EntitySet="estadomaterial" />
+            <End Role="prestamomaterial" EntitySet="prestamomaterial" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_Material" Association="Self.Prestamo_Material">
+            <End Role="material" EntitySet="material" />
+            <End Role="prestamomaterial" EntitySet="prestamomaterial" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="laboratorioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="carrera">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NombreCorto" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="alumno" Relationship="laboratorioModel.Alumno_Carrera" FromRole="carrera" ToRole="alumno" />
+        </EntityType>
+        <EntityType Name="categoria">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="material" Relationship="Self.Material_Categoria" FromRole="categoria" ToRole="material" />
+        </EntityType>
+        <EntityType Name="docente">
+          <Key>
+            <PropertyRef Name="NumeroEmpleado" />
+          </Key>
+          <Property Name="NumeroEmpleado" Type="Int32" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="prestamo" Relationship="laboratorioModel.Prestamo_Docente" FromRole="docente" ToRole="prestamo" />
+        </EntityType>
+        <EntityType Name="estadomaterial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="prestamomaterial" Relationship="laboratorioModel.Prestamo_EstadoEntrega" FromRole="estadomaterial" ToRole="prestamomaterial" />
+          <NavigationProperty Name="prestamomaterial1" Relationship="laboratorioModel.Prestamo_EstadoPrestamoId" FromRole="estadomaterial" ToRole="prestamomaterial" />
+          </EntityType>
+        <EntityType Name="estadoprestamo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="prestamo" Relationship="laboratorioModel.Prestamo_EstadoPrestamo" FromRole="estadoprestamo" ToRole="prestamo" />
+        </EntityType>
+        <EntityType Name="material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CategoriaId" Type="Int32" Nullable="false" />
+          <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="categoria" Relationship="Self.Material_Categoria" FromRole="material" ToRole="categoria" />
+          <NavigationProperty Name="prestamomaterial" Relationship="laboratorioModel.Prestamo_Material" FromRole="material" ToRole="prestamomaterial" />
+        </EntityType>
+        <Association Name="Material_Categoria">
+          <End Role="categoria" Type="Self.categoria" Multiplicity="1" />
+          <End Role="material" Type="Self.material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoria">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="material">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="laboratorioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="carrera" EntityType="Self.carrera" />
+          <EntitySet Name="categoria" EntityType="Self.categoria" />
+          <EntitySet Name="docente" EntityType="Self.docente" />
+          <EntitySet Name="estadomaterial" EntityType="Self.estadomaterial" />
+          <EntitySet Name="estadoprestamo" EntityType="Self.estadoprestamo" />
+          <EntitySet Name="material" EntityType="Self.material" />
+          <AssociationSet Name="Material_Categoria" Association="Self.Material_Categoria">
+            <End Role="categoria" EntitySet="categoria" />
+            <End Role="material" EntitySet="material" />
+          </AssociationSet>
+          <EntitySet Name="prestamo" EntityType="laboratorioModel.prestamo" />
+          <AssociationSet Name="Prestamo_Docente" Association="laboratorioModel.Prestamo_Docente">
+            <End Role="docente" EntitySet="docente" />
+            <End Role="prestamo" EntitySet="prestamo" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_EstadoPrestamo" Association="laboratorioModel.Prestamo_EstadoPrestamo">
+            <End Role="estadoprestamo" EntitySet="estadoprestamo" />
+            <End Role="prestamo" EntitySet="prestamo" />
+          </AssociationSet>
+          <EntitySet Name="prestamomaterial" EntityType="laboratorioModel.prestamomaterial" />
+          <AssociationSet Name="Prestamo_EstadoEntrega" Association="laboratorioModel.Prestamo_EstadoEntrega">
+            <End Role="estadomaterial" EntitySet="estadomaterial" />
+            <End Role="prestamomaterial" EntitySet="prestamomaterial" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_EstadoPrestamoId" Association="laboratorioModel.Prestamo_EstadoPrestamoId">
+            <End Role="estadomaterial" EntitySet="estadomaterial" />
+            <End Role="prestamomaterial" EntitySet="prestamomaterial" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_Material" Association="laboratorioModel.Prestamo_Material">
+            <End Role="material" EntitySet="material" />
+            <End Role="prestamomaterial" EntitySet="prestamomaterial" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo1" Association="laboratorioModel.Prestamo1">
+            <End Role="prestamo" EntitySet="prestamo" />
+            <End Role="prestamomaterial" EntitySet="prestamomaterial" />
+          </AssociationSet>
+          <EntitySet Name="alumno" EntityType="laboratorioModel.alumno" />
+          <AssociationSet Name="Alumno_Carrera" Association="laboratorioModel.Alumno_Carrera">
+            <End Role="carrera" EntitySet="carrera" />
+            <End Role="alumno" EntitySet="alumno" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_Alumno" Association="laboratorioModel.Prestamo_Alumno">
+            <End Role="alumno" EntitySet="alumno" />
+            <End Role="prestamo" EntitySet="prestamo" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="prestamo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" />
+          <Property Name="AlumnoId" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="DocenteId" Type="Int32" />
+          <Property Name="EstadoPrestamoId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="docente" Relationship="laboratorioModel.Prestamo_Docente" FromRole="prestamo" ToRole="docente" />
+          <NavigationProperty Name="estadoprestamo" Relationship="laboratorioModel.Prestamo_EstadoPrestamo" FromRole="prestamo" ToRole="estadoprestamo" />
+          <NavigationProperty Name="prestamomaterial" Relationship="laboratorioModel.Prestamo1" FromRole="prestamo" ToRole="prestamomaterial" />
+          <NavigationProperty Name="alumno" Relationship="laboratorioModel.Prestamo_Alumno" FromRole="prestamo" ToRole="alumno" />
+        </EntityType>
+        <Association Name="Prestamo_Docente">
+          <End Type="laboratorioModel.docente" Role="docente" Multiplicity="0..1" />
+          <End Type="laboratorioModel.prestamo" Role="prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="docente">
+              <PropertyRef Name="NumeroEmpleado" />
+            </Principal>
+            <Dependent Role="prestamo">
+              <PropertyRef Name="DocenteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_EstadoPrestamo">
+          <End Type="laboratorioModel.estadoprestamo" Role="estadoprestamo" Multiplicity="1" />
+          <End Type="laboratorioModel.prestamo" Role="prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadoprestamo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamo">
+              <PropertyRef Name="EstadoPrestamoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="prestamomaterial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaEntrega" Type="DateTime" Nullable="false" />
+          <Property Name="EstadoMaterialPrestamoId" Type="Int32" Nullable="false" />
+          <Property Name="EstadoMaterialEntregaId" Type="Int32" Nullable="false" />
+          <Property Name="MaterialId" Type="Int32" Nullable="false" />
+          <Property Name="Observaciones" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="PrestamoId" Type="Int32" />
+          <NavigationProperty Name="estadomaterial" Relationship="laboratorioModel.Prestamo_EstadoEntrega" FromRole="prestamomaterial" ToRole="estadomaterial" />
+          <NavigationProperty Name="estadomaterial1" Relationship="laboratorioModel.Prestamo_EstadoPrestamoId" FromRole="prestamomaterial" ToRole="estadomaterial" />
+          <NavigationProperty Name="material" Relationship="laboratorioModel.Prestamo_Material" FromRole="prestamomaterial" ToRole="material" />
+          <NavigationProperty Name="prestamo" Relationship="laboratorioModel.Prestamo1" FromRole="prestamomaterial" ToRole="prestamo" />
+        </EntityType>
+        <Association Name="Prestamo_EstadoEntrega">
+          <End Type="laboratorioModel.estadomaterial" Role="estadomaterial" Multiplicity="1" />
+          <End Type="laboratorioModel.prestamomaterial" Role="prestamomaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadomaterial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamomaterial">
+              <PropertyRef Name="EstadoMaterialEntregaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_EstadoPrestamoId">
+          <End Type="laboratorioModel.estadomaterial" Role="estadomaterial" Multiplicity="1" />
+          <End Type="laboratorioModel.prestamomaterial" Role="prestamomaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estadomaterial">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamomaterial">
+              <PropertyRef Name="EstadoMaterialPrestamoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_Material">
+          <End Type="laboratorioModel.material" Role="material" Multiplicity="1" />
+          <End Type="laboratorioModel.prestamomaterial" Role="prestamomaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamomaterial">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo1">
+          <End Type="laboratorioModel.prestamo" Role="prestamo" Multiplicity="0..1" />
+          <End Type="laboratorioModel.prestamomaterial" Role="prestamomaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="prestamo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="prestamomaterial">
+              <PropertyRef Name="PrestamoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="alumno">
+          <Key>
+            <PropertyRef Name="NumeroControl" />
+          </Key>
+          <Property Name="NumeroControl" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoPaterno" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoMaterno" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CarreraId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="carrera" Relationship="laboratorioModel.Alumno_Carrera" FromRole="alumno" ToRole="carrera" />
+          <NavigationProperty Name="prestamo" Relationship="laboratorioModel.Prestamo_Alumno" FromRole="alumno" ToRole="prestamo" />
+        </EntityType>
+        <Association Name="Alumno_Carrera">
+          <End Type="laboratorioModel.carrera" Role="carrera" Multiplicity="1" />
+          <End Type="laboratorioModel.alumno" Role="alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="carrera">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="alumno">
+              <PropertyRef Name="CarreraId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_Alumno">
+          <End Type="laboratorioModel.alumno" Role="alumno" Multiplicity="0..1" />
+          <End Type="laboratorioModel.prestamo" Role="prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumno">
+              <PropertyRef Name="NumeroControl" />
+            </Principal>
+            <Dependent Role="prestamo">
+              <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="laboratorioModelStoreContainer" CdmEntityContainer="laboratorioEntities">
+          <EntitySetMapping Name="carrera">
+            <EntityTypeMapping TypeName="laboratorioModel.carrera">
+              <MappingFragment StoreEntitySet="carrera">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="NombreCorto" ColumnName="NombreCorto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categoria">
+            <EntityTypeMapping TypeName="laboratorioModel.categoria">
+              <MappingFragment StoreEntitySet="categoria">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="docente">
+            <EntityTypeMapping TypeName="laboratorioModel.docente">
+              <MappingFragment StoreEntitySet="docente">
+                <ScalarProperty Name="NumeroEmpleado" ColumnName="NumeroEmpleado" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estadomaterial">
+            <EntityTypeMapping TypeName="laboratorioModel.estadomaterial">
+              <MappingFragment StoreEntitySet="estadomaterial">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estadoprestamo">
+            <EntityTypeMapping TypeName="laboratorioModel.estadoprestamo">
+              <MappingFragment StoreEntitySet="estadoprestamo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="material">
+            <EntityTypeMapping TypeName="laboratorioModel.material">
+              <MappingFragment StoreEntitySet="material">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prestamo">
+            <EntityTypeMapping TypeName="laboratorioModel.prestamo">
+              <MappingFragment StoreEntitySet="prestamo">
+                <ScalarProperty Name="EstadoPrestamoId" ColumnName="EstadoPrestamoId" />
+                <ScalarProperty Name="DocenteId" ColumnName="DocenteId" />
+                <ScalarProperty Name="AlumnoId" ColumnName="AlumnoId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prestamomaterial">
+            <EntityTypeMapping TypeName="laboratorioModel.prestamomaterial">
+              <MappingFragment StoreEntitySet="prestamomaterial">
+                <ScalarProperty Name="PrestamoId" ColumnName="PrestamoId" />
+                <ScalarProperty Name="Observaciones" ColumnName="Observaciones" />
+                <ScalarProperty Name="MaterialId" ColumnName="MaterialId" />
+                <ScalarProperty Name="EstadoMaterialEntregaId" ColumnName="EstadoMaterialEntregaId" />
+                <ScalarProperty Name="EstadoMaterialPrestamoId" ColumnName="EstadoMaterialPrestamoId" />
+                <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="alumno">
+            <EntityTypeMapping TypeName="laboratorioModel.alumno">
+              <MappingFragment StoreEntitySet="alumno">
+                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="NumeroControl" ColumnName="NumeroControl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
