@@ -162,6 +162,7 @@
       <DependentUpon>Laboratorio.edmx</DependentUpon>
       <LastGenOutput>Laboratorio.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="laboratorio.sql" />
     <Content Include="Laboratorio.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Laboratorio.edmx</DependentUpon>
