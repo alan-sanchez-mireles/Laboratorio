@@ -27,5 +27,13 @@ namespace Laboratorio
             dgvAlumnos.AutoGenerateColumns = false;
             dgvAlumnos.DataSource = administradorAlumnos.ObtenerTodos();
         }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            frmAgregarAlumno frmAgregarAlumno = new frmAgregarAlumno();
+            frmAgregarAlumno.Contexto = contexto;
+            frmAgregarAlumno.ShowDialog();
+
+        }
     }
 }

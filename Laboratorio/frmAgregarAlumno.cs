@@ -16,5 +16,17 @@ namespace Laboratorio
         {
             InitializeComponent();
         }
+
+        AdministradorCarreras administradorCarreras;
+        public laboratorioEntities Contexto { get; set; }
+        
+
+        private void frmAgregarAlumno_Load(object sender, EventArgs e)
+        {
+            administradorCarreras = new AdministradorCarreras(Contexto);
+
+            cmbCarrera.DataSource = administradorCarreras.ObtenerTodas();
+            cmbCarrera.DisplayMember = "NombreCorto";
+        }
     }
 }

@@ -149,6 +149,7 @@
             this.Controls.Add(this.lblNumeroControl);
             this.Name = "frmAgregarAlumno";
             this.Text = "Agregar alumno";
+            this.Load += new System.EventHandler(this.frmAgregarAlumno_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministradorAlumos.cs" />
+    <Compile Include="AdministradorCarreras.cs" />
     <Compile Include="alumno.cs">
       <DependentUpon>Laboratorio.tt</DependentUpon>
     </Compile>
