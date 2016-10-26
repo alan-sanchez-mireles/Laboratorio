@@ -32,7 +32,13 @@ namespace Laboratorio
         {
             frmAgregarAlumno frmAgregarAlumno = new frmAgregarAlumno();
             frmAgregarAlumno.Contexto = contexto;
-            frmAgregarAlumno.ShowDialog();
+
+            DialogResult resultado = frmAgregarAlumno.ShowDialog();
+
+            if (resultado == DialogResult.OK)
+            {
+                administradorAlumnos.AgregarAlumno(frmAgregarAlumno.Alumno);
+            }
 
         }
     }

@@ -35,7 +35,7 @@
             this.lblApellidoPaterno = new System.Windows.Forms.Label();
             this.txtApellidoPaterno = new System.Windows.Forms.TextBox();
             this.lblApellidoMaterno = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtApellidoMaterno = new System.Windows.Forms.TextBox();
             this.cmbCarrera = new System.Windows.Forms.ComboBox();
             this.lblCarrera = new System.Windows.Forms.Label();
             this.btnAgregar = new System.Windows.Forms.Button();
@@ -98,12 +98,12 @@
             this.lblApellidoMaterno.TabIndex = 0;
             this.lblApellidoMaterno.Text = "Apellido materno:";
             // 
-            // textBox3
+            // txtApellidoMaterno
             // 
-            this.textBox3.Location = new System.Drawing.Point(115, 90);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(180, 20);
-            this.textBox3.TabIndex = 1;
+            this.txtApellidoMaterno.Location = new System.Drawing.Point(115, 90);
+            this.txtApellidoMaterno.Name = "txtApellidoMaterno";
+            this.txtApellidoMaterno.Size = new System.Drawing.Size(180, 20);
+            this.txtApellidoMaterno.TabIndex = 1;
             // 
             // cmbCarrera
             // 
@@ -124,12 +124,14 @@
             // 
             // btnAgregar
             // 
+            this.btnAgregar.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnAgregar.Location = new System.Drawing.Point(195, 143);
             this.btnAgregar.Name = "btnAgregar";
             this.btnAgregar.Size = new System.Drawing.Size(100, 23);
             this.btnAgregar.TabIndex = 3;
             this.btnAgregar.Text = "Agregar";
             this.btnAgregar.UseVisualStyleBackColor = true;
+            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // frmAgregarAlumno
             // 
@@ -138,7 +140,7 @@
             this.ClientSize = new System.Drawing.Size(307, 176);
             this.Controls.Add(this.btnAgregar);
             this.Controls.Add(this.cmbCarrera);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.txtApellidoMaterno);
             this.Controls.Add(this.lblCarrera);
             this.Controls.Add(this.lblApellidoMaterno);
             this.Controls.Add(this.txtApellidoPaterno);
@@ -164,7 +166,7 @@
         private System.Windows.Forms.Label lblApellidoPaterno;
         private System.Windows.Forms.TextBox txtApellidoPaterno;
         private System.Windows.Forms.Label lblApellidoMaterno;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtApellidoMaterno;
         private System.Windows.Forms.ComboBox cmbCarrera;
         private System.Windows.Forms.Label lblCarrera;
         private System.Windows.Forms.Button btnAgregar;

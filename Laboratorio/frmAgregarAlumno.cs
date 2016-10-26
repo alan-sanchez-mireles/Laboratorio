@@ -19,7 +19,8 @@ namespace Laboratorio
 
         AdministradorCarreras administradorCarreras;
         public laboratorioEntities Contexto { get; set; }
-        
+
+        public alumno Alumno { get; set; }
 
         private void frmAgregarAlumno_Load(object sender, EventArgs e)
         {
@@ -27,6 +28,18 @@ namespace Laboratorio
 
             cmbCarrera.DataSource = administradorCarreras.ObtenerTodas();
             cmbCarrera.DisplayMember = "NombreCorto";
+            cmbCarrera.ValueMember = "Id";      
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            Alumno = new alumno();
+            Alumno.NumeroControl = txtNumeroControl.Text;
+            Alumno.Nombres = txtNombres.Text;
+            Alumno.ApellidoPaterno = txtApellidoPaterno.Text;
+            Alumno.ApellidoMaterno = txtApellidoMaterno.Text;
+            Alumno.CarreraId = (int)cmbCarrera.SelectedValue;
+            Close();
         }
     }
 }
