@@ -100,6 +100,18 @@
     <Compile Include="frmAlumnos.Designer.cs">
       <DependentUpon>frmAlumnos.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmBuscarDocenteAlumno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBuscarDocenteAlumno.Designer.cs">
+      <DependentUpon>frmBuscarDocenteAlumno.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCrearPrestamo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCrearPrestamo.Designer.cs">
+      <DependentUpon>frmCrearPrestamo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMateriales.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +155,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmAlumnos.resx">
       <DependentUpon>frmAlumnos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBuscarDocenteAlumno.resx">
+      <DependentUpon>frmBuscarDocenteAlumno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCrearPrestamo.resx">
+      <DependentUpon>frmCrearPrestamo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMateriales.resx">
       <DependentUpon>frmMateriales.cs</DependentUpon>
