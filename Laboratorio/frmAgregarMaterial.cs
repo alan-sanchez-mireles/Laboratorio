@@ -25,7 +25,7 @@ namespace Laboratorio
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            Material = Material ?? new material();
+            Material = Material == null? new material():Material;
             Material.Nombre = txtNombre.Text;
             Material.Descripcion = txtDescripcion.Text;
             Material.CategoriaId = (int)cmbCategoria.SelectedValue;
