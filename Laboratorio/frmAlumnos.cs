@@ -16,11 +16,11 @@ namespace Laboratorio
         {
             InitializeComponent();
             contexto = new laboratorioEntities();
-            administradorAlumnos = new AdministradorAlumos(contexto);
+            administradorAlumnos = new AdministradorAlumnos(contexto);
         }
 
         laboratorioEntities contexto;
-        AdministradorAlumos administradorAlumnos;
+        AdministradorAlumnos administradorAlumnos;
 
         private void frmAlumnos_Load(object sender, EventArgs e)
         {

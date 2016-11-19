@@ -36,6 +36,13 @@ namespace Laboratorio
             }
         }
 
+        public List<material> BuscarMateriales(string texto)
+        {
+            return contexto.material.Where(x => x.Nombre.Contains(texto) || 
+                                           x.categoria.Nombre.Contains(texto))
+                                           .ToList();
+        }
+
         public delegate void Actualizar();
         public event Actualizar Actualizado;
     }

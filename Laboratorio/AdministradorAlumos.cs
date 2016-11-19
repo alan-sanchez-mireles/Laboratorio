@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Laboratorio
 {
-    public class AdministradorAlumos
+    public class AdministradorAlumnos
     {
         laboratorioEntities contexto;
 
-        public AdministradorAlumos(laboratorioEntities contexto)
+        public AdministradorAlumnos(laboratorioEntities contexto)
         {
             this.contexto = contexto;
         }
@@ -32,6 +32,19 @@ namespace Laboratorio
                 Actualizado?.Invoke();
             }
            
+        }
+
+        public alumno ObtenerAlumno(string numeroControl)
+        {
+            return contexto.alumno.FirstOrDefault(x => x.NumeroControl == numeroControl);
+        }
+
+        public List<alumno> BuscarAlumnos(string texto)
+        {
+            return contexto.alumno.Where(x => x.NumeroControl.Contains(texto) ||
+                                         (x.Nombres + " " + x.ApellidoPaterno +
+                                         " " + x.ApellidoMaterno).Contains(texto)
+                                         || x.carrera.NombreCorto.Contains(texto)).ToList();
         }
 
         public delegate void Actualizar();

@@ -57,6 +57,7 @@
     <Compile Include="AdministradorAlumos.cs" />
     <Compile Include="AdministradorCarreras.cs" />
     <Compile Include="AdministradorCategorias.cs" />
+    <Compile Include="AdministradorDocentes.cs" />
     <Compile Include="AdministradorMateriales.cs" />
     <Compile Include="alumno.cs">
       <DependentUpon>Laboratorio.tt</DependentUpon>
@@ -106,6 +107,12 @@
     <Compile Include="frmBuscarDocenteAlumno.Designer.cs">
       <DependentUpon>frmBuscarDocenteAlumno.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmBuscarMaterial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBuscarMaterial.Designer.cs">
+      <DependentUpon>frmBuscarMaterial.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCrearPrestamo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,6 +143,7 @@
     <Compile Include="material.cs">
       <DependentUpon>Laboratorio.tt</DependentUpon>
     </Compile>
+    <Compile Include="MaterialPedido.cs" />
     <Compile Include="prestamo.cs">
       <DependentUpon>Laboratorio.tt</DependentUpon>
     </Compile>
@@ -158,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmBuscarDocenteAlumno.resx">
       <DependentUpon>frmBuscarDocenteAlumno.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmBuscarMaterial.resx">
+      <DependentUpon>frmBuscarMaterial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCrearPrestamo.resx">
       <DependentUpon>frmCrearPrestamo.cs</DependentUpon>
