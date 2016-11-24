@@ -1,6 +1,6 @@
 ﻿namespace Laboratorio
 {
-    partial class frmCrearPrestamo
+    partial class frmEntregarPrestamo
     {
         /// <summary>
         /// Required designer variable.
@@ -32,29 +32,25 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnBuscar = new System.Windows.Forms.Button();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtClave = new System.Windows.Forms.TextBox();
             this.txtCarrera = new System.Windows.Forms.TextBox();
             this.lblClave = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnAgregar = new System.Windows.Forms.Button();
             this.dgvMateriales = new System.Windows.Forms.DataGridView();
-            this.btnCrear = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMateriales)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.btnBuscar);
             this.groupBox1.Controls.Add(this.txtNombre);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label1);
@@ -63,20 +59,10 @@
             this.groupBox1.Controls.Add(this.lblClave);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(760, 97);
-            this.groupBox1.TabIndex = 0;
+            this.groupBox1.Size = new System.Drawing.Size(760, 76);
+            this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos del Docente/Alumno:";
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Location = new System.Drawing.Point(679, 64);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscar.TabIndex = 2;
-            this.btnBuscar.Text = "Buscar...";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtNombre
             // 
@@ -108,9 +94,9 @@
             // 
             this.txtClave.Location = new System.Drawing.Point(6, 38);
             this.txtClave.Name = "txtClave";
+            this.txtClave.ReadOnly = true;
             this.txtClave.Size = new System.Drawing.Size(150, 20);
             this.txtClave.TabIndex = 1;
-            this.txtClave.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtClave_KeyPress);
             // 
             // txtCarrera
             // 
@@ -128,27 +114,6 @@
             this.lblClave.Size = new System.Drawing.Size(112, 13);
             this.lblClave.TabIndex = 0;
             this.lblClave.Text = "Clave/NumeroControl:";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.btnAgregar);
-            this.groupBox2.Controls.Add(this.dgvMateriales);
-            this.groupBox2.Location = new System.Drawing.Point(12, 115);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(760, 309);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Materiales";
-            // 
-            // btnAgregar
-            // 
-            this.btnAgregar.Location = new System.Drawing.Point(679, 275);
-            this.btnAgregar.Name = "btnAgregar";
-            this.btnAgregar.Size = new System.Drawing.Size(75, 23);
-            this.btnAgregar.TabIndex = 2;
-            this.btnAgregar.Text = "Agregar...";
-            this.btnAgregar.UseVisualStyleBackColor = true;
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // dgvMateriales
             // 
@@ -190,17 +155,16 @@
             this.dgvMateriales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMateriales.Size = new System.Drawing.Size(748, 250);
             this.dgvMateriales.TabIndex = 0;
-            this.dgvMateriales.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMateriales_CellContentClick);
             // 
-            // btnCrear
+            // groupBox2
             // 
-            this.btnCrear.Location = new System.Drawing.Point(678, 430);
-            this.btnCrear.Name = "btnCrear";
-            this.btnCrear.Size = new System.Drawing.Size(94, 23);
-            this.btnCrear.TabIndex = 2;
-            this.btnCrear.Text = "Crear préstamo";
-            this.btnCrear.UseVisualStyleBackColor = true;
-            this.btnCrear.Click += new System.EventHandler(this.btnCrear_Click);
+            this.groupBox2.Controls.Add(this.dgvMateriales);
+            this.groupBox2.Location = new System.Drawing.Point(12, 96);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(760, 281);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Materiales";
             // 
             // Id
             // 
@@ -226,24 +190,23 @@
             // 
             this.Eliminar.HeaderText = "";
             this.Eliminar.Name = "Eliminar";
-            this.Eliminar.Text = "Eliminar";
+            this.Eliminar.Text = "Entregar";
             this.Eliminar.UseColumnTextForButtonValue = true;
             // 
-            // frmCrearPrestamo
+            // frmEntregarPrestamo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 461);
-            this.Controls.Add(this.btnCrear);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(782, 438);
             this.Controls.Add(this.groupBox1);
-            this.Name = "frmCrearPrestamo";
-            this.Text = "frmCrearPrestamo";
-            this.Load += new System.EventHandler(this.frmCrearPrestamo_Load);
+            this.Controls.Add(this.groupBox2);
+            this.Name = "frmEntregarPrestamo";
+            this.Text = "frmEntregarPrestamo";
+            this.Load += new System.EventHandler(this.frmEntregarPrestamo_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMateriales)).EndInit();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -251,20 +214,17 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtClave;
         private System.Windows.Forms.TextBox txtCarrera;
         private System.Windows.Forms.Label lblClave;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.DataGridView dgvMateriales;
-        private System.Windows.Forms.Button btnCrear;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad;
         private System.Windows.Forms.DataGridViewButtonColumn Eliminar;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

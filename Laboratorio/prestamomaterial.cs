@@ -17,7 +17,7 @@ namespace Laboratorio
         public int Id { get; set; }
         public System.DateTime FechaEntrega { get; set; }
         public int EstadoMaterialPrestamoId { get; set; }
-        public int EstadoMaterialEntregaId { get; set; }
+        public Nullable<int> EstadoMaterialEntregaId { get; set; }
         public int MaterialId { get; set; }
         public string Observaciones { get; set; }
         public Nullable<int> PrestamoId { get; set; }

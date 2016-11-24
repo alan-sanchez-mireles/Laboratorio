@@ -81,7 +81,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FechaEntrega" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="EstadoMaterialPrestamoId" Type="int" Nullable="false" />
-          <Property Name="EstadoMaterialEntregaId" Type="int" Nullable="false" />
+          <Property Name="EstadoMaterialEntregaId" Type="int" />
           <Property Name="MaterialId" Type="int" Nullable="false" />
           <Property Name="Observaciones" Type="text" />
           <Property Name="PrestamoId" Type="int" />
@@ -146,8 +146,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Prestamo_EstadoEntrega">
-          <End Role="estadomaterial" Type="Self.estadomaterial" Multiplicity="1" />
+        <Association Name="Prestamo_EstadoEntregaPrestamoId">
+          <End Role="estadomaterial" Type="Self.estadomaterial" Multiplicity="0..1" />
           <End Role="prestamomaterial" Type="Self.prestamomaterial" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="estadomaterial">
@@ -224,7 +224,7 @@
             <End Role="docente" EntitySet="docente" />
             <End Role="prestamo" EntitySet="prestamo" />
           </AssociationSet>
-          <AssociationSet Name="Prestamo_EstadoEntrega" Association="Self.Prestamo_EstadoEntrega">
+          <AssociationSet Name="Prestamo_EstadoEntregaPrestamoId" Association="Self.Prestamo_EstadoEntregaPrestamoId">
             <End Role="estadomaterial" EntitySet="estadomaterial" />
             <End Role="prestamomaterial" EntitySet="prestamomaterial" />
           </AssociationSet>
@@ -279,7 +279,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="prestamomaterial" Relationship="laboratorioModel.Prestamo_EstadoEntrega" FromRole="estadomaterial" ToRole="prestamomaterial" />
+          <NavigationProperty Name="prestamomaterial" Relationship="laboratorioModel.Prestamo_EstadoEntregaPrestamoId" FromRole="estadomaterial" ToRole="prestamomaterial" />
           <NavigationProperty Name="prestamomaterial1" Relationship="laboratorioModel.Prestamo_EstadoPrestamoId" FromRole="estadomaterial" ToRole="prestamomaterial" />
           </EntityType>
         <EntityType Name="estadoprestamo">
@@ -334,8 +334,17 @@
             <End Role="estadoprestamo" EntitySet="estadoprestamo" />
             <End Role="prestamo" EntitySet="prestamo" />
           </AssociationSet>
+          <EntitySet Name="alumno" EntityType="laboratorioModel.alumno" />
+          <AssociationSet Name="Alumno_Carrera" Association="laboratorioModel.Alumno_Carrera">
+            <End Role="carrera" EntitySet="carrera" />
+            <End Role="alumno" EntitySet="alumno" />
+          </AssociationSet>
+          <AssociationSet Name="Prestamo_Alumno" Association="laboratorioModel.Prestamo_Alumno">
+            <End Role="alumno" EntitySet="alumno" />
+            <End Role="prestamo" EntitySet="prestamo" />
+          </AssociationSet>
           <EntitySet Name="prestamomaterial" EntityType="laboratorioModel.prestamomaterial" />
-          <AssociationSet Name="Prestamo_EstadoEntrega" Association="laboratorioModel.Prestamo_EstadoEntrega">
+          <AssociationSet Name="Prestamo_EstadoEntregaPrestamoId" Association="laboratorioModel.Prestamo_EstadoEntregaPrestamoId">
             <End Role="estadomaterial" EntitySet="estadomaterial" />
             <End Role="prestamomaterial" EntitySet="prestamomaterial" />
           </AssociationSet>
@@ -351,15 +360,6 @@
             <End Role="prestamo" EntitySet="prestamo" />
             <End Role="prestamomaterial" EntitySet="prestamomaterial" />
           </AssociationSet>
-          <EntitySet Name="alumno" EntityType="laboratorioModel.alumno" />
-          <AssociationSet Name="Alumno_Carrera" Association="laboratorioModel.Alumno_Carrera">
-            <End Role="carrera" EntitySet="carrera" />
-            <End Role="alumno" EntitySet="alumno" />
-          </AssociationSet>
-          <AssociationSet Name="Prestamo_Alumno" Association="laboratorioModel.Prestamo_Alumno">
-            <End Role="alumno" EntitySet="alumno" />
-            <End Role="prestamo" EntitySet="prestamo" />
-          </AssociationSet>
           </EntityContainer>
         <EntityType Name="prestamo">
           <Key>
@@ -372,8 +372,8 @@
           <Property Name="EstadoPrestamoId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="docente" Relationship="laboratorioModel.Prestamo_Docente" FromRole="prestamo" ToRole="docente" />
           <NavigationProperty Name="estadoprestamo" Relationship="laboratorioModel.Prestamo_EstadoPrestamo" FromRole="prestamo" ToRole="estadoprestamo" />
-          <NavigationProperty Name="prestamomaterial" Relationship="laboratorioModel.Prestamo1" FromRole="prestamo" ToRole="prestamomaterial" />
           <NavigationProperty Name="alumno" Relationship="laboratorioModel.Prestamo_Alumno" FromRole="prestamo" ToRole="alumno" />
+          <NavigationProperty Name="prestamomaterial" Relationship="laboratorioModel.Prestamo1" FromRole="prestamo" ToRole="prestamomaterial" />
         </EntityType>
         <Association Name="Prestamo_Docente">
           <End Type="laboratorioModel.docente" Role="docente" Multiplicity="0..1" />
@@ -399,6 +399,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="alumno">
+          <Key>
+            <PropertyRef Name="NumeroControl" />
+          </Key>
+          <Property Name="NumeroControl" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoPaterno" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoMaterno" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="CarreraId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="carrera" Relationship="laboratorioModel.Alumno_Carrera" FromRole="alumno" ToRole="carrera" />
+          <NavigationProperty Name="prestamo" Relationship="laboratorioModel.Prestamo_Alumno" FromRole="alumno" ToRole="prestamo" />
+        </EntityType>
+        <Association Name="Alumno_Carrera">
+          <End Type="laboratorioModel.carrera" Role="carrera" Multiplicity="1" />
+          <End Type="laboratorioModel.alumno" Role="alumno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="carrera">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="alumno">
+              <PropertyRef Name="CarreraId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Prestamo_Alumno">
+          <End Type="laboratorioModel.alumno" Role="alumno" Multiplicity="0..1" />
+          <End Type="laboratorioModel.prestamo" Role="prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumno">
+              <PropertyRef Name="NumeroControl" />
+            </Principal>
+            <Dependent Role="prestamo">
+              <PropertyRef Name="AlumnoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="prestamomaterial">
           <Key>
             <PropertyRef Name="Id" />
@@ -406,17 +442,17 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FechaEntrega" Type="DateTime" Nullable="false" />
           <Property Name="EstadoMaterialPrestamoId" Type="Int32" Nullable="false" />
-          <Property Name="EstadoMaterialEntregaId" Type="Int32" Nullable="false" />
+          <Property Name="EstadoMaterialEntregaId" Type="Int32" />
           <Property Name="MaterialId" Type="Int32" Nullable="false" />
           <Property Name="Observaciones" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="PrestamoId" Type="Int32" />
-          <NavigationProperty Name="estadomaterial" Relationship="laboratorioModel.Prestamo_EstadoEntrega" FromRole="prestamomaterial" ToRole="estadomaterial" />
+          <NavigationProperty Name="estadomaterial" Relationship="laboratorioModel.Prestamo_EstadoEntregaPrestamoId" FromRole="prestamomaterial" ToRole="estadomaterial" />
           <NavigationProperty Name="estadomaterial1" Relationship="laboratorioModel.Prestamo_EstadoPrestamoId" FromRole="prestamomaterial" ToRole="estadomaterial" />
           <NavigationProperty Name="material" Relationship="laboratorioModel.Prestamo_Material" FromRole="prestamomaterial" ToRole="material" />
           <NavigationProperty Name="prestamo" Relationship="laboratorioModel.Prestamo1" FromRole="prestamomaterial" ToRole="prestamo" />
         </EntityType>
-        <Association Name="Prestamo_EstadoEntrega">
-          <End Type="laboratorioModel.estadomaterial" Role="estadomaterial" Multiplicity="1" />
+        <Association Name="Prestamo_EstadoEntregaPrestamoId">
+          <End Type="laboratorioModel.estadomaterial" Role="estadomaterial" Multiplicity="0..1" />
           <End Type="laboratorioModel.prestamomaterial" Role="prestamomaterial" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="estadomaterial">
@@ -460,42 +496,6 @@
             </Principal>
             <Dependent Role="prestamomaterial">
               <PropertyRef Name="PrestamoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="alumno">
-          <Key>
-            <PropertyRef Name="NumeroControl" />
-          </Key>
-          <Property Name="NumeroControl" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ApellidoPaterno" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="ApellidoMaterno" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="CarreraId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="carrera" Relationship="laboratorioModel.Alumno_Carrera" FromRole="alumno" ToRole="carrera" />
-          <NavigationProperty Name="prestamo" Relationship="laboratorioModel.Prestamo_Alumno" FromRole="alumno" ToRole="prestamo" />
-        </EntityType>
-        <Association Name="Alumno_Carrera">
-          <End Type="laboratorioModel.carrera" Role="carrera" Multiplicity="1" />
-          <End Type="laboratorioModel.alumno" Role="alumno" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="carrera">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="alumno">
-              <PropertyRef Name="CarreraId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Prestamo_Alumno">
-          <End Type="laboratorioModel.alumno" Role="alumno" Multiplicity="0..1" />
-          <End Type="laboratorioModel.prestamo" Role="prestamo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="alumno">
-              <PropertyRef Name="NumeroControl" />
-            </Principal>
-            <Dependent Role="prestamo">
-              <PropertyRef Name="AlumnoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -571,6 +571,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="alumno">
+            <EntityTypeMapping TypeName="laboratorioModel.alumno">
+              <MappingFragment StoreEntitySet="alumno">
+                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="NumeroControl" ColumnName="NumeroControl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="prestamomaterial">
             <EntityTypeMapping TypeName="laboratorioModel.prestamomaterial">
               <MappingFragment StoreEntitySet="prestamomaterial">
@@ -581,17 +592,6 @@
                 <ScalarProperty Name="EstadoMaterialPrestamoId" ColumnName="EstadoMaterialPrestamoId" />
                 <ScalarProperty Name="FechaEntrega" ColumnName="FechaEntrega" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="alumno">
-            <EntityTypeMapping TypeName="laboratorioModel.alumno">
-              <MappingFragment StoreEntitySet="alumno">
-                <ScalarProperty Name="CarreraId" ColumnName="CarreraId" />
-                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
-                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="NumeroControl" ColumnName="NumeroControl" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

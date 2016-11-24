@@ -27,7 +27,7 @@ namespace Laboratorio
     
         public virtual docente docente { get; set; }
         public virtual estadoprestamo estadoprestamo { get; set; }
-        public virtual ICollection<prestamomaterial> prestamomaterial { get; set; }
         public virtual alumno alumno { get; set; }
+        public virtual ICollection<prestamomaterial> prestamomaterial { get; set; }
     }
 }

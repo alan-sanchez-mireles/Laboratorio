@@ -18,11 +18,15 @@ namespace Laboratorio
             contexto = new laboratorioEntities();
             administradorDocentes = new AdministradorDocentes(contexto);
             administradorAlumnos = new AdministradorAlumnos(contexto);
+            administradorPrestamos = new AdministradorPrestamos(contexto);
+            administradorEstados = new AdministradorEstados(contexto);
         }
 
         laboratorioEntities contexto;
         AdministradorDocentes administradorDocentes;
         AdministradorAlumnos administradorAlumnos;
+        AdministradorPrestamos administradorPrestamos;
+        AdministradorEstados administradorEstados;
 
         private void frmCrearPrestamo_Load(object sender, EventArgs e)
         {
@@ -33,11 +37,12 @@ namespace Laboratorio
             columna.HeaderText = "Estado";
             columna.ValueMember = "Id";
             columna.DisplayMember = "Nombre";
-            columna.DataSource = contexto.estadomaterial.ToList();
-            dgvMateriales.Columns.Add(columna);
+            columna.DataSource = administradorEstados.ObtenerEstadosMaterial();
+            dgvMateriales.Columns.Insert(3,columna);
         }
 
-
+        docente docente;
+        alumno alumno;
 
         private void txtClave_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -46,7 +51,7 @@ namespace Laboratorio
                 if (txtClave.Text.Length == 4)
                 {
                     int clave = int.Parse(txtClave.Text);
-                    docente docente = administradorDocentes.ObtenerDocente(clave);
+                    docente = administradorDocentes.ObtenerDocente(clave);
                     if (docente != null)
                     {
                         txtNombre.Text = string.Format("{0} {1} {2}",
@@ -57,7 +62,7 @@ namespace Laboratorio
                 }
                 else if (txtClave.Text.Length == 8)
                 {
-                    alumno alumno = administradorAlumnos.ObtenerAlumno(txtClave.Text);
+                    alumno = administradorAlumnos.ObtenerAlumno(txtClave.Text);
                     if (alumno != null)
                     {
                         txtNombre.Text = string.Format("{0} {1} {2}",
@@ -79,20 +84,22 @@ namespace Laboratorio
             {
                 if (frmBuscar.Alumno!=null)
                 {
-                    txtClave.Text = frmBuscar.Alumno.NumeroControl;
+                    alumno = frmBuscar.Alumno;
+                    txtClave.Text = alumno.NumeroControl;
                     txtNombre.Text = string.Format("{0} {1} {2}",
-                                        frmBuscar.Alumno.Nombres,
-                                        frmBuscar.Alumno.ApellidoPaterno,
-                                        frmBuscar.Alumno.ApellidoMaterno);
-                    txtCarrera.Text = frmBuscar.Alumno.carrera.NombreCorto;
+                                        alumno.Nombres,
+                                        alumno.ApellidoPaterno,
+                                        alumno.ApellidoMaterno);
+                    txtCarrera.Text = alumno.carrera.NombreCorto;
                 }
                 else
                 {
-                    txtClave.Text = frmBuscar.Docente.NumeroEmpleado.ToString();
+                    docente = frmBuscar.Docente;
+                    txtClave.Text = docente.NumeroEmpleado.ToString();
                     txtNombre.Text = string.Format("{0} {1} {2}",
-                                        frmBuscar.Docente.Nombres,
-                                        frmBuscar.Docente.ApellidoPaterno,
-                                        frmBuscar.Docente.ApellidoMaterno);
+                                        docente.Nombres,
+                                        docente.ApellidoPaterno,
+                                        docente.ApellidoMaterno);
                 }
             }
         }
@@ -106,21 +113,60 @@ namespace Laboratorio
             DialogResult resultado = buscarMaterial.ShowDialog();
             if (resultado == DialogResult.OK)
             {
-                MaterialPedido materialPedido = new MaterialPedido();
-                materialPedido.NombreMaterial = buscarMaterial.Material.Nombre;
-                materialPedido.MaterialId = buscarMaterial.Material.Id;
-                materialPedido.Cantidad = 1;
-                materialPedido.EstadoMaterialId = 1;
-                materiales.Add(materialPedido);
+                MaterialPedido material = materiales.FirstOrDefault(x => x.MaterialId == buscarMaterial.Material.Id);
+                if (material != null)
+                {
+                    material.Cantidad++;
+                }
+                else
+                {
+                    MaterialPedido materialPedido = new MaterialPedido();
+                    materialPedido.NombreMaterial = buscarMaterial.Material.Nombre;
+                    materialPedido.MaterialId = buscarMaterial.Material.Id;
+                    materialPedido.Cantidad = 1;
+                    materialPedido.EstadoMaterialId = 1;
+                    materiales.Add(materialPedido);
+                } 
+                    dgvMateriales.DataSource = null;
+                    dgvMateriales.DataSource = materiales;
+                
+            }
+        }
+
+        private void dgvMateriales_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4)
+            {
+                MaterialPedido material = (MaterialPedido)dgvMateriales.Rows[e.RowIndex].DataBoundItem;
+                materiales.Remove(material);
 
                 dgvMateriales.DataSource = null;
                 dgvMateriales.DataSource = materiales;
             }
         }
 
-        private void dgvMateriales_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void btnCrear_Click(object sender, EventArgs e)
         {
+            prestamo prestamo = new prestamo();
+            if (alumno!=null)
+            {
+                prestamo.AlumnoId = alumno.NumeroControl;
+            }
+            else
+            {
+                prestamo.DocenteId = docente.NumeroEmpleado;
+            }
+            prestamo.EstadoPrestamoId = 1;
+            prestamo.Fecha = DateTime.Now;
 
+            foreach (var material in materiales)
+            {
+                prestamomaterial prestamomaterial = new prestamomaterial();
+                prestamomaterial.MaterialId = material.MaterialId;
+                prestamomaterial.EstadoMaterialPrestamoId = material.EstadoMaterialId;
+                prestamo.prestamomaterial.Add(prestamomaterial);
+            }
+            administradorPrestamos.Agregar(prestamo);
         }
     }
 }

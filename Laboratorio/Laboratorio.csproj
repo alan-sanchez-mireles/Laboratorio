@@ -58,7 +58,9 @@
     <Compile Include="AdministradorCarreras.cs" />
     <Compile Include="AdministradorCategorias.cs" />
     <Compile Include="AdministradorDocentes.cs" />
+    <Compile Include="AdministradorEstados.cs" />
     <Compile Include="AdministradorMateriales.cs" />
+    <Compile Include="AdministradorPrestamos.cs" />
     <Compile Include="alumno.cs">
       <DependentUpon>Laboratorio.tt</DependentUpon>
     </Compile>
@@ -119,11 +121,23 @@
     <Compile Include="frmCrearPrestamo.Designer.cs">
       <DependentUpon>frmCrearPrestamo.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmEntregarPrestamo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmEntregarPrestamo.Designer.cs">
+      <DependentUpon>frmEntregarPrestamo.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMateriales.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMateriales.Designer.cs">
       <DependentUpon>frmMateriales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmPrestamos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPrestamos.Designer.cs">
+      <DependentUpon>frmPrestamos.cs</DependentUpon>
     </Compile>
     <Compile Include="Laboratorio.Context.cs">
       <AutoGen>True</AutoGen>
@@ -147,6 +161,7 @@
     <Compile Include="prestamo.cs">
       <DependentUpon>Laboratorio.tt</DependentUpon>
     </Compile>
+    <Compile Include="PrestamoGrid.cs" />
     <Compile Include="prestamomaterial.cs">
       <DependentUpon>Laboratorio.tt</DependentUpon>
     </Compile>
@@ -173,8 +188,14 @@
     <EmbeddedResource Include="frmCrearPrestamo.resx">
       <DependentUpon>frmCrearPrestamo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmEntregarPrestamo.resx">
+      <DependentUpon>frmEntregarPrestamo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMateriales.resx">
       <DependentUpon>frmMateriales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPrestamos.resx">
+      <DependentUpon>frmPrestamos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

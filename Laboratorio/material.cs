@@ -11,22 +11,20 @@ namespace Laboratorio
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class material
     {
         public material()
         {
             this.prestamomaterial = new HashSet<prestamomaterial>();
         }
-
+    
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public int CategoriaId { get; set; }
         public byte[] Imagen { get; set; }
-
-        public string NombreCategoria { get { return categoria.Nombre; } }
-
+    
         public virtual categoria categoria { get; set; }
         public virtual ICollection<prestamomaterial> prestamomaterial { get; set; }
     }

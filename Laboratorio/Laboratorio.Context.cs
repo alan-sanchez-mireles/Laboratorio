@@ -32,7 +32,7 @@ namespace Laboratorio
         public DbSet<estadoprestamo> estadoprestamo { get; set; }
         public DbSet<material> material { get; set; }
         public DbSet<prestamo> prestamo { get; set; }
-        public DbSet<prestamomaterial> prestamomaterial { get; set; }
         public DbSet<alumno> alumno { get; set; }
+        public DbSet<prestamomaterial> prestamomaterial { get; set; }
     }
 }

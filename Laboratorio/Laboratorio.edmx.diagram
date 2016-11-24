@@ -15,14 +15,14 @@
         <EntityTypeShape EntityType="laboratorioModel.prestamo" Width="1.5" PointX="5.375" PointY="1" />
         <AssociationConnector Association="laboratorioModel.Prestamo_Docente" />
         <AssociationConnector Association="laboratorioModel.Prestamo_EstadoPrestamo" />
-        <EntityTypeShape EntityType="laboratorioModel.prestamomaterial" Width="1.5" PointX="8.25" PointY="3.5" />
-        <AssociationConnector Association="laboratorioModel.Prestamo_EstadoEntrega" />
-        <AssociationConnector Association="laboratorioModel.Prestamo_EstadoPrestamoId" />
-        <AssociationConnector Association="laboratorioModel.Prestamo_Material" />
-        <AssociationConnector Association="laboratorioModel.Prestamo1" />
         <EntityTypeShape EntityType="laboratorioModel.alumno" Width="1.5" PointX="3" PointY="1.25" />
         <AssociationConnector Association="laboratorioModel.Alumno_Carrera" />
         <AssociationConnector Association="laboratorioModel.Prestamo_Alumno" />
+        <EntityTypeShape EntityType="laboratorioModel.prestamomaterial" Width="1.5" PointX="10" PointY="4" />
+        <AssociationConnector Association="laboratorioModel.Prestamo_EstadoEntregaPrestamoId" />
+        <AssociationConnector Association="laboratorioModel.Prestamo_EstadoPrestamoId" />
+        <AssociationConnector Association="laboratorioModel.Prestamo_Material" />
+        <AssociationConnector Association="laboratorioModel.Prestamo1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

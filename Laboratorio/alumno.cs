@@ -11,28 +11,20 @@ namespace Laboratorio
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class alumno
     {
         public alumno()
         {
             this.prestamo = new HashSet<prestamo>();
         }
-
+    
         public string NumeroControl { get; set; }
         public string Nombres { get; set; }
         public string ApellidoPaterno { get; set; }
         public string ApellidoMaterno { get; set; }
         public int CarreraId { get; set; }
-
-        public string NombreCarrera
-        {
-            get
-            {
-                return carrera.NombreCorto;
-            }
-        }
-
+    
         public virtual carrera carrera { get; set; }
         public virtual ICollection<prestamo> prestamo { get; set; }
     }
